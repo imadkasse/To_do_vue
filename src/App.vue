@@ -9,6 +9,9 @@ const tasks = ref(
     ? JSON.parse(localStorage.getItem("tasks"))
     : ref([])
 );
+const currentMode = ref(
+  localStorage.getItem("theme") ? localStorage.getItem("theme") : "light"
+);
 const taskName = ref("");
 const addTask = () => {
   if (taskName) {
@@ -36,11 +39,35 @@ const completedMark = (id) => {
     }
   });
 };
+const switchMode = () => {
+  const currentModeFunc = localStorage.getItem("theme");
+  if (currentModeFunc !== "dark") {
+    localStorage.setItem("theme", "dark");
+    currentMode.value = localStorage.getItem("theme");
+    document.body.classList.add("dark");
+  } else {
+    localStorage.setItem("theme", "light");
+    currentMode.value = localStorage.getItem("theme");
+    document.body.classList.remove("dark");
+  }
+};
 </script>
 
 <template>
-  <div className="max-w-md mx-auto mt-10 p-6 bg-white rounded-lg shadow-lg">
-    <h1 className="text-2xl font-bold mb-4 text-gray-800">Todo List</h1>
+  <div>
+    <button
+      @click="switchMode"
+      class="py-2 px-3 bg-blue-400 text-white rounded-md m-2"
+    >
+      current mode : {{ currentMode }}
+    </button>
+  </div>
+  <div
+    className="max-w-md mx-auto mt-10 p-6  bg-white rounded-lg shadow-lg dark:bg-slate-800 "
+  >
+    <h1 className="text-2xl font-bold mb-4 text-gray-800 dark:text-white">
+      Todo List
+    </h1>
     <div className="flex mb-4">
       <input
         type="text"
