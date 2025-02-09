@@ -1,6 +1,6 @@
 <script setup>
 import Todo from "./components/Todo.vue";
-import { ref } from "vue";
+import { onMounted, ref } from "vue";
 // const tasks = localStorage.getItem("tasks")
 //   ? JSON.parse(localStorage.getItem("tasks"))
 //   : ref([]);
@@ -51,6 +51,14 @@ const switchMode = () => {
     document.body.classList.remove("dark");
   }
 };
+const getMode = () => {
+  if (localStorage.getItem("theme") === "dark") {
+    document.body.classList.add("dark");
+  } else {
+    document.body.classList.remove("dark");
+  }
+};
+onMounted(getMode)
 </script>
 
 <template>
